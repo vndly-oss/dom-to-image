@@ -766,11 +766,13 @@
             function getCssRules(styleSheets) {
                 var cssRules = [];
                 styleSheets.forEach(function (sheet) {
-                    try {
-                        util.asArray(sheet.cssRules || []).forEach(cssRules.push.bind(cssRules));
-                    } catch (e) {
-                        console.log('Error while reading CSS rules from ' + sheet.href, e.toString());
-                    }
+					if (sheet.cssRules && typeof sheet.cssRules === 'object') {
+						try {
+							util.asArray(sheet.cssRules || []).forEach(cssRules.push.bind(cssRules));
+						} catch (e) {
+							console.log('Error while reading CSS rules from ' + sheet.href, e.toString());
+						}
+					}
                 });
                 return cssRules;
             }
