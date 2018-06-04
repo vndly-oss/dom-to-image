@@ -57,7 +57,6 @@
             .then(function (node) {
                 return cloneNode(node, options.filter, true);
             })
-            .then(embedFonts)
             .then(inlineImages)
             .then(applyOptions)
             .then(function (clone) {
@@ -307,16 +306,6 @@
                 });
             }
         }
-    }
-
-    function embedFonts(node) {
-        return fontFaces.resolveAll()
-            .then(function (cssText) {
-                var styleNode = document.createElement('style');
-                node.appendChild(styleNode);
-                styleNode.appendChild(document.createTextNode(cssText));
-                return node;
-            });
     }
 
     function inlineImages(node) {
